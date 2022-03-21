@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ramadan Countdown Project</title>
+    <Style>
+      body {
+  text-align: center;
+  font-family: sans-serif;
+  font-weight: 100;
+  background-image: url("ramadan.jpeg");
+}
+
+h1 {
+  color: rgb(153, 51, 76);
+  font-weight: 100;
+  font-size: 40px;
+  margin: 40px 0px 20px;
+}
+p {
+  color: #bfac00;
+  font-size: 20px;
+  text-align: center;
+}
+
+#clock {
+  font-family: sans-serif;
+  color: #fff;
+  display: inline-block;
+  font-weight: 100;
+  text-align: center;
+  font-size: 30px;
+}
+
+#clock > div {
+  padding: 10px;
+  border-radius: 3px;
+  background: #2300bf;
+  display: inline-block;
+}
+
+#clock > span {
+  padding: 15px;
+  border-radius: 3px;
+  background: palevioletred;
+  display: inline-block;
+}
+
+.text {
+  padding-top: 5px;
+  font-size: 16px;
+}
+
+    </Style>
+</head>
+<body>
+    <div class="container">
+      <h1>Ramadan Countdown Clock</h1>
+      <p> Ramadan is one of the Five Pillars of Islam. It lasts for 29 to 30 days, which is roughly one month. Ramadan happens during the 9th month of the Islamic calendar. The Islamic calendar is based on the cycle of the moon so the dates of Ramadan change every year.</p>
+      <div id="clock">
+        <div>
+          <span class="days"></span>
+          <div class="text">Days</div>
+        </div>
+        <div>
+          <span class="hours"></span>
+          <div class="text">Hours</div>
+        </div>
+        <div>
+          <span class="minutes"></span>
+          <div class="text">Minutes</div>
+        </div>
+        <div>
+          <span class="seconds"></span>
+          <div class="text">Seconds</div>
+        </div>
+      </div>
+      
+<script>
+  function getTimeRemaining(starttime) {
+  const total = Date.parse(starttime) - Date.parse(new Date());
+  const seconds = Math.floor((total / 1000) % 60);
+  const minutes = Math.floor((total / 1000 / 60) % 60);
+  const hours = Math.floor((total / (1000 * 60 * 60)) % 24);
+  const days = Math.floor(total / (1000 * 60 * 60 * 24));
+  
+  return {
+    total,
+    days,
+    hours,
+    minutes,
+    seconds
+  };
+}
+
+function initializeClock(id, starttime) {
+  const clock = document.getElementById(id);
+  const days = clock.querySelector('.days');
+  const hours = clock.querySelector('.hours');
+  const minutes = clock.querySelector('.minutes');
+  const seconds = clock.querySelector('.seconds');
+
+  function startClock() {
+    const t = getTimeRemaining(starttime);
+
+    days.innerHTML = t.days;
+    hours.innerHTML = ('0' + t.hours).slice(-2);
+    minutes.innerHTML = ('0' + t.minutes).slice(-2);
+    seconds.innerHTML = ('0' + t.seconds).slice(-2);
+
+    if (t.total <= 0) {
+      clearInterval(timeinterval);
+    }
+  }
+
+  startClock();
+  const timeinterval = setInterval(startClock);
+}
+
+const date = new Date(Date.parse(new Date())+ 12 * 24 * 60 * 60 * 1000);
+initializeClock('clock', date);
+</script>
+</body>
+</html>
